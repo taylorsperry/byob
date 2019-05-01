@@ -64,3 +64,46 @@ app.get('/api/v1/authors/:id/books', (req, res) => {
     })
 })
 
+//POST
+
+//post an author
+app.post('/api/v1/authors', (req, res) => {
+  const author = req.body
+  for (let requiredParam of ['name', 'bio']) {
+    //sad path
+    if(!author[requiredParam]) {
+      return res
+        .status(422)
+        .send({ error: `Expected format: { name: <String>, bio: <String> }. You're missing a ${requiredParam} property.`})
+    }
+  }
+  //happy path
+  database('authors').insert(author, 'id')
+    .then(author => {
+      res.status(201).json({ id: author[0] })
+    })
+    .catch(error => {
+      res.status(500).json({error})
+    })
+})
+
+app.post('/api/v1/books', (req, res) => {
+  const book = req.body
+  for (let requiredParam of ['title', 'pub', 'author_id']) {
+    //sad path
+    if(!book[requiredParam]) {
+      return res
+        .status(422)
+        .send({ error: `Expected format: { title: <String>, pub: <Integer>, author_id: <Integer> }. You're missing a ${requiredParam} property.`})
+    }
+  }
+  //happy path
+  database('books').insert(book, 'id')
+    .then(book => {
+      res.status(201).json({ id: book[0] })
+    })
+    .catch(error => {
+      res.status(500).json({error})
+    })
+})
+
