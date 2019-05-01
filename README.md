@@ -1,0 +1,3 @@
+To seed the data, I'll want to write a function createAuthor = (knex, author) => that will insert each author's name and bio into the table and automatically generate an id. 
+
+I'll also want to write a function createBook = (knex, book) => that will insert each book's title and pub into the table and automatically generate an id. It will also have to iterate over the authors array and compare the author names; if the author names match, it should add a foreign key with that author's id. 
