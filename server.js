@@ -48,6 +48,9 @@ app.get('/api/v1/authors/:id', (req, res) => {
         });
       }
     })
+    .catch(error => {
+      res.status(500).json({error})
+    })
 })
 
 //get associated books by author id
@@ -61,6 +64,9 @@ app.get('/api/v1/authors/:id/books', (req, res) => {
           error: `Could not find book with id ${req.params.id}`
         })
       }
+    })
+    .catch(error => {
+      res.status(500).json({error})
     })
 })
 
@@ -99,11 +105,30 @@ app.post('/api/v1/books', (req, res) => {
   }
   //happy path
   database('books').insert(book, 'id')
-    .then(book => {
-      res.status(201).json({ id: book[0] })
+    .then(books => {
+      res.status(201).json({ id: books[0] })
     })
     .catch(error => {
       res.status(500).json({error})
+    })
+})
+
+//DELETE
+
+//delete a book 
+app.delete('/api/v1/books/:id', (req, res) => {
+  database('books').where('id', req.params.id).del()
+    .then(result => {
+      if (result > 0) {
+        res.status(200).json(`Deleted book with id ${req.params.id}`)
+      } else {
+        res.status(404).json({
+          error: `Could not find book with id ${req.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      res.status(500).json('something went wrong')
     })
 })
 
