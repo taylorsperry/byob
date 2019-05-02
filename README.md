@@ -2,13 +2,13 @@
 
 This is a week-long solo project to practice building databases using Express, Knex, and PostgreSQL. I scraped the book publisher [FSG Originals](https://www.fsgoriginals.com/authors) website to create a one-to-many relational database schema of authors and books. I built a RESTful API with 4 GET endpoints, 2 POST endpoints, and 1 DELETE endpoint (detailed below). 
 
-### API endpoints
+## API endpoints
+----------------
 
-#### Get all authors
-```
-GET /api/v1/authors
-```
-###### Response
+### GET
+
+#### Get all authors `GET /api/v1/authors`
+#### Response
 ```javascript
   [{
       "id": 168,
@@ -33,11 +33,8 @@ GET /api/v1/authors
     }]
 ```
 
-#### Get all books
-```
-GET /api/v1/books
-```
-###### Response
+#### Get all books `GET /api/v1/books`
+#### Response
 ```javascript
    [{
       "id": 39,
@@ -65,11 +62,8 @@ GET /api/v1/books
     }]
  ```
 
-#### Get specific author by id
-```
-GET /api/v1/authors/:id
-```
-###### Response
+#### Get specific author by id `GET /api/v1/authors/:id`
+#### Response
 ```javascript
    [{
      "id": 183,
@@ -80,11 +74,8 @@ GET /api/v1/authors/:id
    }]
 ```
 
-#### Get books associated with specific author
-```
-GET /api/vi/authors/:id/books
-```
-###### Response
+#### Get books associated with specific author `GET /api/vi/authors/:id/books`
+#### Response
 ```javascript
    [{
       "id": 59,
@@ -128,18 +119,37 @@ GET /api/vi/authors/:id/books
     }]
 ```
 
-#### Post a new author
-```
-POST /api/v1/authors
-```
-###### Parameters
+### POST
+
+#### Post a new author `POST /api/v1/authors`
+#### Parameters
 | Name | Type | Description |
 |:----:|:----:|-------------|
 |`name`|`string`| Name of new author|
 |`bio`|`string`| Biography of new author|
-###### Response
+#### Response
 ```javascript
    {
      "id": 187
    }
 ```
+
+#### Post a new book `POST /api/v1/books`
+#### Parameters
+| Name | Type | Description |
+|:----:|:----:|-------------|
+|`title`|`string`| Title of new book|
+|`pub`|`integer`| Year of publication|
+|`author_id`|`integer`| Foreign key associated with new book's author|
+#### Response
+```javascript
+   {
+     "id": 83
+   }
+```
+
+### DELETE
+
+#### Delete a book `DELETE /api/v1/books/:id`
+#### Response 
+```"Deleted title 'Against Interpretation' with id 83"```
