@@ -4,9 +4,7 @@ This is a week-long solo project to practice building databases using Express, K
 
 ## API endpoints
 
-## Authors
-
-### GET
+### Authors
 
 #### `GET /api/v1/authors`
 Response sends all authors in the database. If the authors table is populated, the response has a 200 status and sends the following: 
@@ -60,8 +58,6 @@ If the no id matches the parameter in the request, the response has a 404 status
     }
 ```
 
-### POST
-
 #### `POST /api/v1/authors`
 Allows users to post a new author to the authors table with the following parameters:
 
@@ -98,9 +94,7 @@ sends the following response:
 ```
 
 
-## Books
-
-### GET
+### Books
 
 #### `GET /api/v1/books`
 Response sends all books in the database. If the books table is populated, the response has a 200 status and sends the following:  
@@ -190,8 +184,6 @@ If no id matches the parameter in the request, the response has a 404 status and
     }
 ```
 
-### POST
-
 #### `POST /api/v1/books`
 Allows users to post a new book to the books table with the following parameters:
 
@@ -229,8 +221,6 @@ sends the following response:
     error: `Expected format: { title: <String>, pub: <integer>, author_id: <integer> }. You're missing the author_id property.`
   }
 ```
-
-### DELETE
 
 #### `DELETE /api/v1/books/:id`
 Allows users to delete a single book that matches the id parameter in the request. For example, the request `/api/v1/books/83` has a 200 status and sends the following: 
