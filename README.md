@@ -1,4 +1,4 @@
-## Build Your Own Backend: Authors + Books
+# Build Your Own Backend: Authors + Books
 
 This is a week-long solo project to practice building databases using Express, Knex, and PostgreSQL. I scraped the book publisher [FSG Originals](https://www.fsgoriginals.com/authors) website to create a one-to-many relational database schema of authors and books. I built a RESTful API with 4 GET endpoints, 2 POST endpoints, and 1 DELETE endpoint (detailed below). 
 
