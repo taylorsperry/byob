@@ -71,7 +71,7 @@ Response sends all books in the database. If the books table is populated, the r
 If the books table is not populated, the response has a 404 status and sends the following: 
 ```javascript
     {
-      error: 'No authors found'
+      error: 'No books found'
     }
 ```
 
@@ -87,10 +87,10 @@ Response sends a single author from the database with the `id` that matches the 
    }]
 ```
 
-If the no id matches the parameter in the request, the response has a 404 status and sends the following: 
+If the no id matches the parameter in the request, the response has a 404 status and sends an error. For example, the request `/api/v1/authors/999` sends the following: 
 ```javascript
     {
-      error: 'Could not find author with id ${req.params.id}'
+      error: 'Could not find author with id 999'
     }
 ```
 
@@ -139,10 +139,10 @@ Response sends all books with the `author_id` that matches the parameter in the 
     }]
 ```
 
-If no id matches the parameter in the request, the response has a 404 status and sends the following: 
+If no id matches the parameter in the request, the response has a 404 status and sends an error. For example, the request `/api/v1/authors/999/books` sends the following: 
 ```javascript
     {
-      error: 'Could not find book with id ${req.params.id}'
+      error: 'Could not find any books with an author_id of 999'
     }
 ```
 
@@ -169,11 +169,17 @@ sends the following response:
    }
 ```
 
-If any of the required paramaters are missing from the request, the response has a 422 status and sends the following: 
+If any of the required paramaters are missing from the request, the response has a 422 status and sends an error. For example, the request
+
+```javascript
+{ "name": "Joan Didion" }
+```
+
+sends the following response: 
 
 ```javascript
   {
-    error: `Expected format: { name: <String>, bio: <String> }. You're missing a ${requiredParam} property.`
+    error: `Expected format: { name: <String>, bio: <String> }. You're missing a bio property.`
   }
 ```
 
@@ -191,6 +197,7 @@ The response has a 201 status and sends the unique id created for the new record
 ```javascript
 { "title": "Slouching Towards Bethlehem", "pub": 1968, "author_id": 187 }
 ```
+
 sends the following response:
 
 ```javascript
@@ -199,11 +206,18 @@ sends the following response:
    }
 ```
 
-If any of the required paramaters are missing from the request, the response has a 422 status and sends the following: 
+If any of the required paramaters are missing from the request, the response has a 422 status and sends an error. For example, 
+the request 
+
+```javascript
+{ "title": "Slouching Towards Bethlehem", "pub": 1968 }
+```
+
+sends the following response: 
 
 ```javascript
   {
-    error: `Expected format: { title: <String>, pub: <integer>, author_id: <integer> }. You're missing a ${requiredParam} property.`
+    error: `Expected format: { title: <String>, pub: <integer>, author_id: <integer> }. You're missing the author_id property.`
   }
 ```
 
@@ -215,9 +229,9 @@ Allows users to delete a single book that matches the id parameter in the reques
 "Deleted title 'Slouching Towards Bethlehem' with id 83"
 ```
 
-If no id matches the parameter in the request, the response has a 404 status and sends the following: 
+If no id matches the parameter in the request, the response has a 404 status and sends an error. For example, the request `/api/v1/books/999` sends the following: 
 ```javascript
     {
-      error: 'Could not find book with id ${req.params.id}'
+      error: 'Could not find book with id 999'
     }
 ```
