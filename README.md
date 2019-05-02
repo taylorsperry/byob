@@ -136,3 +136,4 @@ POST /api/v1/authors
 | Name | Type | Description |
 |:----:|:----:|-------------|
 |`name`|`string`| Name of new author|
+|`bio`|`string`| Biography of new author|
