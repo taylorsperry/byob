@@ -165,6 +165,6 @@ sends the following response:
 
 ### DELETE
 
-#### Delete a book `DELETE /api/v1/books/:id`
+#### `DELETE /api/v1/books/:id`
 Allows users to delete a single book that matches the id parameter in the request. For example, `/api/v1/books/83` sends the following response: 
 ```"Deleted title 'Slouching Towards Bethlehem' with id 83"```
