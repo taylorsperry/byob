@@ -127,3 +127,12 @@ GET /api/vi/authors/:id/books
       "updated_at": "2019-05-01T16:33:27.292Z"
     }]
 ```
+
+#### Post a new author
+```
+POST /api/v1/authors
+```
+###### Parameters
+| Name | Type | Description |
+|:----:|:----:|-------------|
+|`name`|`string`| Name of new author|
