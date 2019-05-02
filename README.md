@@ -3,12 +3,11 @@
 This is a week-long solo project to practice building databases using Express, Knex, and PostgreSQL. I scraped the book publisher [FSG Originals](https://www.fsgoriginals.com/authors) website to create a one-to-many relational database schema of authors and books. I built a RESTful API with 4 GET endpoints, 2 POST endpoints, and 1 DELETE endpoint (detailed below). 
 
 ## API endpoints
-----------------
 
 ### GET
 
 #### Get all authors `GET /api/v1/authors`
-#### Response
+Response
 ```javascript
   [{
       "id": 168,
@@ -34,7 +33,7 @@ This is a week-long solo project to practice building databases using Express, K
 ```
 
 #### Get all books `GET /api/v1/books`
-#### Response
+Response
 ```javascript
    [{
       "id": 39,
@@ -63,7 +62,7 @@ This is a week-long solo project to practice building databases using Express, K
  ```
 
 #### Get specific author by id `GET /api/v1/authors/:id`
-#### Response
+Response
 ```javascript
    [{
      "id": 183,
@@ -75,7 +74,7 @@ This is a week-long solo project to practice building databases using Express, K
 ```
 
 #### Get books associated with specific author `GET /api/vi/authors/:id/books`
-#### Response
+Response
 ```javascript
    [{
       "id": 59,
@@ -122,12 +121,13 @@ This is a week-long solo project to practice building databases using Express, K
 ### POST
 
 #### Post a new author `POST /api/v1/authors`
-#### Parameters
+Parameters
+
 | Name | Type | Description |
 |:----:|:----:|-------------|
 |`name`|`string`| Name of new author|
 |`bio`|`string`| Biography of new author|
-#### Response
+Response
 ```javascript
    {
      "id": 187
@@ -135,13 +135,14 @@ This is a week-long solo project to practice building databases using Express, K
 ```
 
 #### Post a new book `POST /api/v1/books`
-#### Parameters
+Parameters
+
 | Name | Type | Description |
 |:----:|:----:|-------------|
 |`title`|`string`| Title of new book|
 |`pub`|`integer`| Year of publication|
 |`author_id`|`integer`| Foreign key associated with new book's author|
-#### Response
+Response
 ```javascript
    {
      "id": 83
@@ -151,5 +152,5 @@ This is a week-long solo project to practice building databases using Express, K
 ### DELETE
 
 #### Delete a book `DELETE /api/v1/books/:id`
-#### Response 
+Response 
 ```"Deleted title 'Against Interpretation' with id 83"```
