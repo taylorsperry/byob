@@ -18,10 +18,14 @@ app.listen(port, () => console.log(`Listening on port ${port}!`))
 app.get('/api/v1/authors', (req, res) => {
   database('authors').select()
     .then((authors) => {
-      res.status(200).json(authors)
+      if(authors.length) {
+        res.status(200).json(authors)
+      } else {
+        res.status(404).json({ error: 'No authors found' })
+      }
     })
     .catch((error) => {
-      res.status(500).json({error})
+      res.status(500).json(`Something went wrong with the server: ${error}`)
     })
 })
 
@@ -29,10 +33,14 @@ app.get('/api/v1/authors', (req, res) => {
 app.get('/api/v1/books', (req, res) => {
   database('books').select()
     .then((books) => {
-      res.status(200).json(books)
+      if(books.length) {
+        res.status(200).json(books)
+      } else {
+        res.status(404).json({ error: 'No books found' })
+      }
     })
     .catch((error) => {
-      res.status(500).json({error})
+      res.status(500).json(`Something went wrong with the server: ${error}`)
     })
 })
 
@@ -49,7 +57,7 @@ app.get('/api/v1/authors/:id', (req, res) => {
       }
     })
     .catch(error => {
-      res.status(500).json({error})
+      res.status(500).json(`Something went wrong with the server: ${error}`)
     })
 })
 
@@ -66,7 +74,7 @@ app.get('/api/v1/authors/:id/books', (req, res) => {
       }
     })
     .catch(error => {
-      res.status(500).json({error})
+      res.status(500).json(`Something went wrong with the server: ${error}`)
     })
 })
 
@@ -76,14 +84,12 @@ app.get('/api/v1/authors/:id/books', (req, res) => {
 app.post('/api/v1/authors', (req, res) => {
   const author = req.body
   for (let requiredParam of ['name', 'bio']) {
-    //sad path
     if(!author[requiredParam]) {
       return res
         .status(422)
         .send({ error: `Expected format: { name: <String>, bio: <String> }. You're missing a ${requiredParam} property.`})
     }
   }
-  //happy path
   database('authors').insert(author, 'id')
     .then(author => {
       res.status(201).json({ id: author[0] })
@@ -96,20 +102,18 @@ app.post('/api/v1/authors', (req, res) => {
 app.post('/api/v1/books', (req, res) => {
   const book = req.body
   for (let requiredParam of ['title', 'pub', 'author_id']) {
-    //sad path
     if(!book[requiredParam]) {
       return res
         .status(422)
-        .send({ error: `Expected format: { title: <String>, pub: <Integer>, author_id: <Integer> }. You're missing a ${requiredParam} property.`})
+        .send({ error: `Expected format: { title: <String>, pub: <Integer>, author_id: <Integer> }. You're missing the ${requiredParam} property.`})
     }
   }
-  //happy path
   database('books').insert(book, 'id')
     .then(books => {
       res.status(201).json({ id: books[0] })
     })
     .catch(error => {
-      res.status(500).json({error})
+      res.status(500).json(`Something went wrong with the server: ${error}`)
     })
 })
 
@@ -120,7 +124,8 @@ app.delete('/api/v1/books/:id', (req, res) => {
   database('books').where('id', req.params.id).del()
     .then(result => {
       if (result > 0) {
-        res.status(200).json(`Deleted book with id ${req.params.id}`)
+        console.log('req', req)
+        res.status(200).json(`Deleted title '${req.body.title}' with id ${req.params.id}`)
       } else {
         res.status(404).json({
           error: `Could not find book with id ${req.params.id}`
@@ -128,7 +133,7 @@ app.delete('/api/v1/books/:id', (req, res) => {
       }
     })
     .catch(error => {
-      res.status(500).json('something went wrong')
+      res.status(500).json(`Something went wrong with the server: ${error}`)
     })
 })
 
