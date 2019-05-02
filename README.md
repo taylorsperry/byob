@@ -137,3 +137,9 @@ POST /api/v1/authors
 |:----:|:----:|-------------|
 |`name`|`string`| Name of new author|
 |`bio`|`string`| Biography of new author|
+###### Response
+```javascript
+   {
+     "id": 187
+   }
+```
