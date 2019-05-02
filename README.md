@@ -4,6 +4,8 @@ This is a week-long solo project to practice building databases using Express, K
 
 ## API endpoints
 
+## Authors
+
 ### GET
 
 #### `GET /api/v1/authors`
@@ -39,6 +41,67 @@ If the authors table is not populated, the response has a 404 status and sends t
     }
 ```
 
+#### `GET /api/v1/authors/:id`
+Response sends a single author from the database with the `id` that matches the parameter in the request. For example, for the request `/api/v1/authors/183` the response has a 200 status and sends the following:  
+```javascript
+   [{
+     "id": 183,
+     "name": "JEFF VANDERMEER",
+     "bio": "Jeff VanderMeer is an award-winning novelist and editor.",
+     "created_at": "2019-05-01T16:33:27.249Z",
+     "updated_at": "2019-05-01T16:33:27.249Z"
+   }]
+```
+
+If the no id matches the parameter in the request, the response has a 404 status and sends an error. For example, the request `/api/v1/authors/999` sends the following: 
+```javascript
+    {
+      error: 'Could not find author with id 999'
+    }
+```
+
+### POST
+
+#### `POST /api/v1/authors`
+Allows users to post a new author to the authors table with the following parameters:
+
+| Name | Type | Description |
+|:----:|:----:|-------------|
+|`name`|`string`| Name of new author|
+|`bio`|`string`| Biography of new author|
+
+The response has a 201 status and sends the unique id created for the new record. For example, the request body
+
+```javascript
+{ "name": "Joan Didion", "bio": "Joan Didion is an award-winning novelist and critic" }
+```
+sends the following response: 
+
+```javascript
+   {
+     "id": 187
+   }
+```
+
+If any of the required paramaters are missing from the request, the response has a 422 status and sends an error. For example, the request
+
+```javascript
+{ "name": "Joan Didion" }
+```
+
+sends the following response: 
+
+```javascript
+  {
+    error: `Expected format: { name: <String>, bio: <String> }. You're missing a bio property.`
+  }
+```
+
+
+## Books
+
+### GET
+
 #### `GET /api/v1/books`
 Response sends all books in the database. If the books table is populated, the response has a 200 status and sends the following:  
 ```javascript
@@ -72,25 +135,6 @@ If the books table is not populated, the response has a 404 status and sends the
 ```javascript
     {
       error: 'No books found'
-    }
-```
-
-#### `GET /api/v1/authors/:id`
-Response sends a single author from the database with the `id` that matches the parameter in the request. For example, for the request `/api/v1/authors/183` the response has a 200 status and sends the following:  
-```javascript
-   [{
-     "id": 183,
-     "name": "JEFF VANDERMEER",
-     "bio": "Jeff VanderMeer is an award-winning novelist and editor.",
-     "created_at": "2019-05-01T16:33:27.249Z",
-     "updated_at": "2019-05-01T16:33:27.249Z"
-   }]
-```
-
-If the no id matches the parameter in the request, the response has a 404 status and sends an error. For example, the request `/api/v1/authors/999` sends the following: 
-```javascript
-    {
-      error: 'Could not find author with id 999'
     }
 ```
 
@@ -147,41 +191,6 @@ If no id matches the parameter in the request, the response has a 404 status and
 ```
 
 ### POST
-
-#### `POST /api/v1/authors`
-Allows users to post a new author to the authors table with the following parameters:
-
-| Name | Type | Description |
-|:----:|:----:|-------------|
-|`name`|`string`| Name of new author|
-|`bio`|`string`| Biography of new author|
-
-The response has a 201 status and sends the unique id created for the new record. For example, the request body
-
-```javascript
-{ "name": "Joan Didion", "bio": "Joan Didion is an award-winning novelist and critic" }
-```
-sends the following response: 
-
-```javascript
-   {
-     "id": 187
-   }
-```
-
-If any of the required paramaters are missing from the request, the response has a 422 status and sends an error. For example, the request
-
-```javascript
-{ "name": "Joan Didion" }
-```
-
-sends the following response: 
-
-```javascript
-  {
-    error: `Expected format: { name: <String>, bio: <String> }. You're missing a bio property.`
-  }
-```
 
 #### `POST /api/v1/books`
 Allows users to post a new book to the books table with the following parameters:
