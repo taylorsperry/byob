@@ -6,8 +6,8 @@ This is a week-long solo project to practice building databases using Express, K
 
 ### GET
 
-#### Get all authors `GET /api/v1/authors`
-Response
+#### `GET /api/v1/authors`
+Response sends all authors in the database. Example: 
 ```javascript
   [{
       "id": 168,
@@ -32,8 +32,8 @@ Response
     }]
 ```
 
-#### Get all books `GET /api/v1/books`
-Response
+#### `GET /api/v1/books`
+Response sends all books in the database. Example: 
 ```javascript
    [{
       "id": 39,
@@ -61,8 +61,8 @@ Response
     }]
  ```
 
-#### Get specific author by id `GET /api/v1/authors/:id`
-Response
+#### `GET /api/v1/authors/:id`
+Response sends a single author from the database with the `id` that matches the parameter in the request. For example `/api/v1/authors/183` sends the following response:  
 ```javascript
    [{
      "id": 183,
@@ -73,8 +73,8 @@ Response
    }]
 ```
 
-#### Get books associated with specific author `GET /api/vi/authors/:id/books`
-Response
+#### `GET /api/vi/authors/:id/books`
+Response sends all books with the `author_id` that matches the parameter in the request. For example `/api/v1/authors/183/books` sends the following response: 
 ```javascript
    [{
       "id": 59,
@@ -120,23 +120,29 @@ Response
 
 ### POST
 
-#### Post a new author `POST /api/v1/authors`
-Parameters
+#### `POST /api/v1/authors`
+Allows users to post a new author to the authors table with the following parameters:
 
 | Name | Type | Description |
 |:----:|:----:|-------------|
 |`name`|`string`| Name of new author|
 |`bio`|`string`| Biography of new author|
 
-Response
+The response is the unique id created for the new record. For example, the request body
+
+```javascript
+{ "name": "Joan Didion", "bio": "Joan Didion is an award-winning novelist and critic" }
+```
+sends the following response: 
+
 ```javascript
    {
      "id": 187
    }
 ```
 
-#### Post a new book `POST /api/v1/books`
-Parameters
+#### `POST /api/v1/books`
+Allows users to post a new book to the books table with the following parameters:
 
 | Name | Type | Description |
 |:----:|:----:|-------------|
@@ -144,7 +150,13 @@ Parameters
 |`pub`|`integer`| Year of publication|
 |`author_id`|`integer`| Foreign key associated with new book's author|
 
-Response
+The response is the unique id created for the new record. For example, the request body
+
+```javascript
+{ "title": "Slouching Towards Bethlehem", "pub": 1968, "author_id": 187 }
+```
+sends the following response:
+
 ```javascript
    {
      "id": 83
@@ -154,5 +166,5 @@ Response
 ### DELETE
 
 #### Delete a book `DELETE /api/v1/books/:id`
-Response 
-```"Deleted title 'Against Interpretation' with id 83"```
+Allows users to delete a single book that matches the id parameter in the request. For example, `/api/v1/books/83` sends the following response: 
+```"Deleted title 'Slouching Towards Bethlehem' with id 83"```
