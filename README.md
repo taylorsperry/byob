@@ -127,6 +127,7 @@ Parameters
 |:----:|:----:|-------------|
 |`name`|`string`| Name of new author|
 |`bio`|`string`| Biography of new author|
+
 Response
 ```javascript
    {
@@ -142,6 +143,7 @@ Parameters
 |`title`|`string`| Title of new book|
 |`pub`|`integer`| Year of publication|
 |`author_id`|`integer`| Foreign key associated with new book's author|
+
 Response
 ```javascript
    {
