@@ -1,18 +1,35 @@
-express is a small framework built on top of the web server functionality provided by Node.js. This way the developer is only responsible for the 'middleware' part of the request flow.
+## Build Your Own Backend: Authors + Books
 
-Declares the environment as development, testing, or production environment. If we don’t know, we’ll assume we’re in development.
+This is a week-long solo project to practice building databases using Express, Knex, and PostgreSQL. I scraped the book publisher FSG Originals website to create a one-to-many relational database schema of authors and books. I built a RESTful API with 4 GET endpoints, 2 POST endpoints, and 1 DELETE endpoint (detailed below). 
 
-Based on the environment, fetch the database configuration from knexfile.js so the express app will be able to connect to it.
+### API endpoints
 
-// assigns express app to the const app.
+#### Get all authors
 
-// allows app to parse the request body to json by default (for POST requests)
+```
+GET /api/v1/authors
+```
 
-//tells app to listen at port 3000 and console logs that information
-
-//calls the GET http method with the URL as the first param and the req/res callback as the second param to get all authors. calls the select method on the knex database and then returns a response with the status code 200 and the parsed authors. 
-+ 
-
-To seed the data, I'll want to write a function createAuthor = (knex, author) => that will insert each author's name and bio into the table and automatically generate an id. 
-
-I'll also want to write a function createBook = (knex, book) => that will insert each book's title and pub into the table and automatically generate an id. It will also have to iterate over the authors array and compare the author names; if the author names match, it should add a foreign key with that author's id. 
+```javascript
+ [{
+        "id": 168,
+        "name": "BEN LERNER",
+        "bio": "Ben Lerner was born in Topeka, Kansas, in 1979. He has received fellowships from the Fulbright, Guggenheim, Howard, and MacArthur Foundations.",
+        "created_at": "2019-05-01T16:33:27.240Z",
+        "updated_at": "2019-05-01T16:33:27.240Z"
+    },
+    {
+        "id": 176,
+        "name": "RICHARD LLOYD PARRY",
+        "bio": "Richard Lloyd Parry is the Asia editor and Tokyo bureau chief of The Times (London) and the author of People Who Eat Darkness and In the Time of Madness.",
+        "created_at": "2019-05-01T16:33:27.245Z",
+        "updated_at": "2019-05-01T16:33:27.245Z"
+    },
+    {
+        "id": 142,
+        "name": "CLAY BYARS",
+        "bio": "Clay Byars attended The School of Letters at Sewanee, Tennessee, and is the assistant editor for Narrative Magazine. He lives with his two dogs on a farm outside Birmingham, Alabama.",
+        "created_at": "2019-05-01T16:33:27.218Z",
+        "updated_at": "2019-05-01T16:33:27.218Z"
+    }]
+```
