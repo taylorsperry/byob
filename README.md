@@ -7,7 +7,7 @@ This is a week-long solo project to practice building databases using Express, K
 ### GET
 
 #### `GET /api/v1/authors`
-Response sends all authors in the database. Example: 
+Response sends all authors in the database. If the authors table is populated, the response has a 200 status and sends the following: 
 ```javascript
   [{
       "id": 168,
@@ -32,8 +32,15 @@ Response sends all authors in the database. Example:
     }]
 ```
 
+If the authors table is not populated, the response has a 404 status and sends the following: 
+```javascript
+    {
+      error: 'No authors found'
+    }
+```
+
 #### `GET /api/v1/books`
-Response sends all books in the database. Example: 
+Response sends all books in the database. If the books table is populated, the response has a 200 status and sends the following:  
 ```javascript
    [{
       "id": 39,
@@ -60,9 +67,16 @@ Response sends all books in the database. Example:
       "updated_at": "2019-05-01T16:33:27.252Z"
     }]
  ```
+ 
+If the books table is not populated, the response has a 404 status and sends the following: 
+```javascript
+    {
+      error: 'No authors found'
+    }
+```
 
 #### `GET /api/v1/authors/:id`
-Response sends a single author from the database with the `id` that matches the parameter in the request. For example `/api/v1/authors/183` sends the following response:  
+Response sends a single author from the database with the `id` that matches the parameter in the request. For example, for the request `/api/v1/authors/183` the response has a 200 status and sends the following:  
 ```javascript
    [{
      "id": 183,
@@ -73,8 +87,15 @@ Response sends a single author from the database with the `id` that matches the 
    }]
 ```
 
+If the no id matches the parameter in the request, the response has a 404 status and sends the following: 
+```javascript
+    {
+      error: 'Could not find author with id ${req.params.id}'
+    }
+```
+
 #### `GET /api/vi/authors/:id/books`
-Response sends all books with the `author_id` that matches the parameter in the request. For example `/api/v1/authors/183/books` sends the following response: 
+Response sends all books with the `author_id` that matches the parameter in the request. For example, for the request `/api/v1/authors/183/books`, the response has a 200 status and sends the following: 
 ```javascript
    [{
       "id": 59,
@@ -118,6 +139,13 @@ Response sends all books with the `author_id` that matches the parameter in the 
     }]
 ```
 
+If no id matches the parameter in the request, the response has a 404 status and sends the following: 
+```javascript
+    {
+      error: 'Could not find book with id ${req.params.id}'
+    }
+```
+
 ### POST
 
 #### `POST /api/v1/authors`
@@ -128,7 +156,7 @@ Allows users to post a new author to the authors table with the following parame
 |`name`|`string`| Name of new author|
 |`bio`|`string`| Biography of new author|
 
-The response is the unique id created for the new record. For example, the request body
+The response has a 201 status and sends the unique id created for the new record. For example, the request body
 
 ```javascript
 { "name": "Joan Didion", "bio": "Joan Didion is an award-winning novelist and critic" }
@@ -141,6 +169,14 @@ sends the following response:
    }
 ```
 
+If any of the required paramaters are missing from the request, the response has a 422 status and sends the following: 
+
+```javascript
+  {
+    error: `Expected format: { name: <String>, bio: <String> }. You're missing a ${requiredParam} property.`
+  }
+```
+
 #### `POST /api/v1/books`
 Allows users to post a new book to the books table with the following parameters:
 
@@ -150,7 +186,7 @@ Allows users to post a new book to the books table with the following parameters
 |`pub`|`integer`| Year of publication|
 |`author_id`|`integer`| Foreign key associated with new book's author|
 
-The response is the unique id created for the new record. For example, the request body
+The response has a 201 status and sends the unique id created for the new record. For example, the request body
 
 ```javascript
 { "title": "Slouching Towards Bethlehem", "pub": 1968, "author_id": 187 }
@@ -163,8 +199,25 @@ sends the following response:
    }
 ```
 
+If any of the required paramaters are missing from the request, the response has a 422 status and sends the following: 
+
+```javascript
+  {
+    error: `Expected format: { title: <String>, pub: <integer>, author_id: <integer> }. You're missing a ${requiredParam} property.`
+  }
+```
+
 ### DELETE
 
 #### `DELETE /api/v1/books/:id`
-Allows users to delete a single book that matches the id parameter in the request. For example, `/api/v1/books/83` sends the following response: 
-```"Deleted title 'Slouching Towards Bethlehem' with id 83"```
+Allows users to delete a single book that matches the id parameter in the request. For example, the request `/api/v1/books/83` has a 200 status and sends the following: 
+```javascript
+"Deleted title 'Slouching Towards Bethlehem' with id 83"
+```
+
+If no id matches the parameter in the request, the response has a 404 status and sends the following: 
+```javascript
+    {
+      error: 'Could not find book with id ${req.params.id}'
+    }
+```
