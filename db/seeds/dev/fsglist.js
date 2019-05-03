@@ -15,7 +15,7 @@ const createAuthor = (knex, author) => {
           createBook(knex, {
             title: book.title,
             pub: book.pub,
-            au_id: authorIds[0]
+            author_id: authorIds[0]
           })
         )
       }
