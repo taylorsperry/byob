@@ -13,11 +13,12 @@ const app = express()
 //Assigns the express app to the variable app. 
 const port = 3000
 //Asigns the number 3000 to the variable port.
+//Delete this when you add production environment
 
 app.use(express.json())
 //Allows app to parse the request body to json by default. 
 app.listen(port, () => console.log(`Listening on port ${port}!`))
-//When the server is running, console log reports that its running on the port declared above. 
+//When the server is running, console log reports that its running on the port declared above. Update this once there's a production environment. 
 
 //GET
 
