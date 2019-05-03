@@ -69,7 +69,7 @@ app.get('/api/v1/authors/:id/books', (req, res) => {
         res.status(200).json(books)
       } else {
         res.status(404).json({
-          error: `Could not find book with id ${req.params.id}`
+          error: `Could not find any books with an author_id of ${req.params.id}`
         })
       }
     })
@@ -87,7 +87,7 @@ app.post('/api/v1/authors', (req, res) => {
     if(!author[requiredParam]) {
       return res
         .status(422)
-        .send({ error: `Expected format: { name: <String>, bio: <String> }. You're missing a ${requiredParam} property.`})
+        .send({ error: `Expected format: { name: <String>, bio: <String> }. You're missing the ${requiredParam} property.`})
     }
   }
   database('authors').insert(author, 'id')
@@ -99,6 +99,7 @@ app.post('/api/v1/authors', (req, res) => {
     })
 })
 
+//post a book
 app.post('/api/v1/books', (req, res) => {
   const book = req.body
   for (let requiredParam of ['title', 'pub', 'author_id']) {
@@ -124,7 +125,6 @@ app.delete('/api/v1/books/:id', (req, res) => {
   database('books').where('id', req.params.id).del()
     .then(result => {
       if (result > 0) {
-        console.log('req', req)
         res.status(200).json(`Deleted title '${req.body.title}' with id ${req.params.id}`)
       } else {
         res.status(404).json({
